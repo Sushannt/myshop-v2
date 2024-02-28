@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
           </h3>
         </Link>
         <div className="flex justify-between w-3/4">
-          {product.rating !== undefined && <Rating rating={product.rating} />}
+          <Rating rating={product.rating} />
           <p className="text-right">{product.numReviews} Reviews</p>
         </div>
         <p className="text-3xl font-bold">{`$${product.price}`}</p>

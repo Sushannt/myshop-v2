@@ -33,8 +33,8 @@ const CartScreen = () => {
         <div className="py-5 text-xl text-amber-500 font-black">
           <h1>Shopping Cart</h1>
         </div>
-        <div className="grid grid-cols-12 space-x-5 space-y-5 md:space-y-0">
-          <div className="col-span-12 md:col-span-8 overflow-y-auto">
+        <div className="grid grid-cols-12 space-x-5 space-y-5 md:space-y-0 place-items-center w-full">
+          <div className="col-span-12 md:col-span-8 overflow-y-auto w-full">
             {cartItems.length === 0 ? (
               <Alert>
                 <span>
@@ -50,11 +50,13 @@ const CartScreen = () => {
                   {cartItems.map((item) => (
                     <tr key={item._id}>
                       <td>
-                        <img
-                          src={item.image}
-                          alt={item.description}
-                          className="rounded max-w-20"
-                        />
+                        <Link to={`/products/${item._id}`}>
+                          <img
+                            src={item.image}
+                            alt={item.description}
+                            className="rounded max-w-20"
+                          />
+                        </Link>
                       </td>
                       <td>
                         <Link
@@ -96,7 +98,7 @@ const CartScreen = () => {
               </table>
             )}
           </div>
-          <div className="col-span-12 md:col-span-4">
+          <div className="col-span-12 md:col-span-4 w-3/4 mx-auto">
             <div className="card bg-base-300">
               <div className="card-body">
                 <h2 className="card-title border-b-2 border-accent pb-2">

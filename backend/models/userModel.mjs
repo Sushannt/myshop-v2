@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema(
       select: false, // Hide the password field when we return a response
     },
 
+    profile: {
+      type: String,
+    },
+
     isAdmin: {
       type: Boolean,
       required: true,

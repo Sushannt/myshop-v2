@@ -5,7 +5,10 @@ import User from "../models/userModel.mjs";
 import asyncHandler from "../middleware/asyncHandler.mjs";
 
 // utils
-import { generateToken, verifyToken } from "../utils/token.utils.mjs";
+import { generateToken } from "../utils/token.utils.mjs";
+
+// generate random robohash profile
+import randomRobohashURL from "../helper/randomRobohashProfile.mjs";
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -23,6 +26,7 @@ export const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      profile: user.profile,
       isAdmin: user.isAdmin,
     });
   } else {
@@ -36,6 +40,7 @@ export const authUser = asyncHandler(async (req, res) => {
 // @access  Public
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
+  const profile = randomRobohashURL();
 
   // check all fields
   if (!name || !email || !password) {
@@ -56,6 +61,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    profile,
   });
 
   // generate token
@@ -65,6 +71,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     _id: user._id,
     name: user.name,
     email: user.email,
+    profile: user.profile,
     isAdmin: user.isAdmin,
   });
 });
@@ -98,6 +105,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
     _id: user._id,
     name: user.name,
     email: user.email,
+    profile: user.profile,
     isAdmin: user.isAdmin,
   });
 });

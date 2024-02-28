@@ -1,25 +1,43 @@
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+// no profile
+import noprofile from "../assets/noprofile.svg";
+
+//apiSlice
+import { useLogoutMutation } from "../slices/usersApiSlice.mjs";
+
+//reducer
+import { logout } from "../slices/authSlice.mjs";
 
 const Header = () => {
   const { cartItems, itemsPrice } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const [logoutApiCall] = useLogoutMutation(); //api call
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <header className="bg-base-300 backdrop-blur-lg  fixed top-0 left-0 w-full z-10">
-      <div className="navbar  md:w-11/12 mx-auto">
+      <div className="navbar md:w-11/12 mx-auto">
         <div className="flex-1">
-          <Link className="btn btn-ghost text-xl font-semibold" to="/">
+          <Link className="btn text-orange-300 text-xl font-semibold" to="/">
             MyShop
           </Link>
         </div>
-        <div className="flex-none flex gap-x-4">
-          <div className="form-control h-10">
-            <input
-              type="text"
-              placeholder="Search"
-              className="input input-bordered min:w-24 md:w-auto"
-            />
-          </div>
+        <div className=" flex gap-x-4">
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
@@ -78,28 +96,43 @@ const Header = () => {
             >
               <div className="w-10 rounded-full">
                 <img
+                  src={userInfo ? userInfo.profile : noprofile}
                   alt="profile"
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
                 />
               </div>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <Link to={"/logout"}>Logout</Link>
-              </li>
-            </ul>
+            {userInfo ? (
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <a className="justify-between">
+                    Profile
+                    <span className="badge">New</span>
+                  </a>
+                </li>
+                <li>
+                  <a>Settings</a>
+                </li>
+                <li>
+                  <button onClick={logoutHandler}>Logout</button>
+                </li>
+              </ul>
+            ) : (
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52"
+              >
+                <li>
+                  <Link to={"/login"}>
+                    <button className="btn btn-secondary btn-md btn-wide">
+                      SignIn
+                    </button>
+                  </Link>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </div>
