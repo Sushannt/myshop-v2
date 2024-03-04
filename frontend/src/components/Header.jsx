@@ -30,7 +30,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-base-300 backdrop-blur-lg  fixed top-0 left-0 w-full z-10">
+    <header className="bg-base-300 backdrop-blur-lg fixed top-0 left-0 w-full z-20">
       <div className="navbar md:w-11/12 mx-auto">
         <div className="flex-1">
           <Link className="btn text-orange-300 text-xl font-semibold" to="/">
