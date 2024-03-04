@@ -118,6 +118,7 @@ const ProductScreen = () => {
                       <button
                         className="btn btn-primary mt-5"
                         onClick={addToCartHandler}
+                        disabled={product.countInStock < 1}
                       >
                         Add to Cart
                       </button>
