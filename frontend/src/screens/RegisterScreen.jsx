@@ -64,12 +64,17 @@ const LoginScreen = () => {
           </div>
         </div>
       )}
-      <h1 className="text-3xl font-semibold tracking-wide pt-10">Register</h1>
-      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+      <h1 className="text-3xl font-semibold tracking-wide pt-10 text-secondary-800">
+        Register
+      </h1>
+      <form
+        className="space-y-6 w-3/4 mx-auto"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <InputControl label={"Name"} altLabel={errors.name?.message}>
           <input
             {...register("name")}
-            className={`input input-bordered ${
+            className={`input bg-neutral-200 text-secondary-800 input-bordered ${
               errors?.name ? "border-red-500/25" : null
             }`}
           />
@@ -78,7 +83,7 @@ const LoginScreen = () => {
         <InputControl label={"Email"} altLabel={errors.email?.message}>
           <input
             {...register("email")}
-            className={`input input-bordered ${
+            className={`input bg-neutral-200 text-secondary-800 input-bordered ${
               errors?.email ? "border-red-500/25" : null
             }`}
           />
@@ -88,7 +93,7 @@ const LoginScreen = () => {
           <input
             {...register("password")}
             type="password"
-            className={`input input-bordered ${
+            className={`input bg-neutral-200 text-secondary-800 input-bordered ${
               errors?.password ? "border-red-500/25" : null
             }`}
           />
@@ -101,7 +106,7 @@ const LoginScreen = () => {
           <input
             {...register("confirmPassword")}
             type="password"
-            className={`input input-bordered ${
+            className={`input bg-neutral-200 text-secondary-800 input-bordered ${
               errors?.confirmPassword ? "border-red-500/25" : null
             }`}
           />
@@ -112,7 +117,7 @@ const LoginScreen = () => {
             {isLoading ? (
               <span className="loading loading-spinner loading-sm"></span>
             ) : (
-              <span>Let&apos;s get started</span>
+              <span className="tracking-wider">Register</span>
             )}
           </button>
         </div>
@@ -123,7 +128,7 @@ const LoginScreen = () => {
           Already have an account?{" "}
           <Link
             to={redirect ? `/register?redirect=${redirect}` : "/login"}
-            className="link link-secondary"
+            className="link text-accent"
           >
             Sign in here
           </Link>

@@ -40,9 +40,9 @@ const ProductScreen = () => {
           <span> message={error?.error || error?.data?.message} </span>
         </Alert>
       ) : (
-        <>
+        <div className="bg-neutral-100 text-secondary-800">
           <Link to="/">
-            <button className="btn btn-outline btn-primary mt-5 ml-5">
+            <button className="btn btn-outline text-accent hover:bg-accent mt-5 ml-5">
               <ArrowLongLeftIcon className="size-6" /> Go back
             </button>
           </Link>
@@ -96,7 +96,7 @@ const ProductScreen = () => {
                       <th>Qty:</th>
                       <td>
                         <select
-                          className="select w-full max-w-xs"
+                          className="select w-2/4 max-w-xs bg-neutral-100"
                           value={qty}
                           onChange={(e) => setQty(parseInt(e.target.value))}
                         >
@@ -116,7 +116,7 @@ const ProductScreen = () => {
                   <tr>
                     <td colSpan="3" className="text-right sm:text-left">
                       <button
-                        className="btn btn-primary mt-5"
+                        className="btn btn-primary text-neutral-100 mt-5"
                         onClick={addToCartHandler}
                         disabled={product.countInStock < 1}
                       >
@@ -128,7 +128,7 @@ const ProductScreen = () => {
               </table>
             </div>
           </section>
-        </>
+        </div>
       )}
     </>
   );

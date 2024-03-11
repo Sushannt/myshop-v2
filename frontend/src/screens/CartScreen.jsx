@@ -30,7 +30,7 @@ const CartScreen = () => {
   return (
     <>
       <div className="w-11/12 mx-auto relative">
-        <div className="py-5 text-xl text-amber-500 font-black absolute top-0 left-0">
+        <div className="py-5 text-xl text-primary font-black absolute top-0 left-0">
           <h1>Shopping Cart</h1>
         </div>
         <div className="grid grid-cols-12 space-x-5 space-y-5 md:space-y-0 place-items-center w-full pt-[8vh]">
@@ -39,7 +39,7 @@ const CartScreen = () => {
               <Alert>
                 <span>
                   Your cart is empty{" "}
-                  <Link to="/" className="link text-rose-800">
+                  <Link to="/" className="link text-accent">
                     Go Back
                   </Link>
                 </span>
@@ -55,22 +55,22 @@ const CartScreen = () => {
                             <img
                               src={item.image}
                               alt={item.description}
-                              className="rounded max-w-20"
+                              className="rounded max-w-20  border-2 border-neutral-200/35"
                             />
                           </Link>
                         </td>
                         <td>
                           <Link
                             to={`/products/${item._id}`}
-                            className="text-wrap"
+                            className="text-wrap text-secondary-800"
                           >
                             {item.name}
                           </Link>
                         </td>
-                        <td>${item.price}</td>
+                        <td className="text-secondary-800">${item.price}</td>
                         <td>
                           <select
-                            className="select w-full max-w-xs border-slate-600/10"
+                            className="select w-3/4 max-w-xs text-secondary-800 bg-neutral-100"
                             value={item.qty}
                             onChange={(e) => {
                               addToCartHandler(item, Number(e.target.value));
@@ -89,7 +89,7 @@ const CartScreen = () => {
                         </td>
                         <td>
                           <button
-                            className="btn btn-outline btn-circle text-slate-500/50 border-none"
+                            className="btn btn-outline btn-circle border-none"
                             onClick={() => removeFromCartHandler(item._id)}
                           >
                             <XMarkIcon className="w-6 md:w-8" />
@@ -124,7 +124,7 @@ const CartScreen = () => {
                               </td>
                               <td>
                                 <select
-                                  className="select w-full max-w-xs border-slate-600/10"
+                                  className="select w-2/4 max-w-xs bg-neutral-100"
                                   value={item.qty}
                                   onChange={(e) => {
                                     addToCartHandler(
@@ -146,7 +146,7 @@ const CartScreen = () => {
                               </td>
                               <td>
                                 <button
-                                  className="btn btn-outline btn-circle text-slate-500/50 border-none"
+                                  className="btn btn-outline btn-circle text-neutral-300 border-none"
                                   onClick={() =>
                                     removeFromCartHandler(item._id)
                                   }
@@ -165,7 +165,7 @@ const CartScreen = () => {
             )}
           </div>
           <div className="col-span-12 md:col-span-4 w-3/4 mx-auto">
-            <div className="card bg-base-300 card-compact md:card-normal">
+            <div className="card bg-neutral text-neutral-100 card-compact md:card-normal">
               <div className="card-body">
                 <h2 className="card-title border-b-2 border-accent pb-2">
                   Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}
@@ -174,7 +174,7 @@ const CartScreen = () => {
                 <p>${cart.itemsPrice}</p>
                 <div className="card-actions justify-start mt-5">
                   <button
-                    className="btn btn-accent rounded"
+                    className="btn btn-accent text-neutral rounded"
                     disabled={cartItems.length === 0}
                     onClick={checkoutHandler}
                   >

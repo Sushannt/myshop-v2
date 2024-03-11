@@ -56,7 +56,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <FormContainer>
+    <>
       {errorMsg && (
         <div className="toast">
           <div className="alert alert-error">
@@ -64,50 +64,57 @@ const LoginScreen = () => {
           </div>
         </div>
       )}
-      <h1 className="text-3xl font-semibold tracking-wide pt-10">Sign in</h1>
-      <form className="space-y-10" onSubmit={handleSubmit(onSubmit)}>
-        <InputControl label={"Email"} altLabel={errors.email?.message}>
-          <input
-            {...register("email")}
-            className={`input input-bordered ${
-              errors?.email ? "border-red-500/25" : null
-            }`}
-          />
-        </InputControl>
+      <FormContainer>
+        <h1 className="text-3xl font-semibold tracking-wide pt-10 text-secondary-800">
+          Sign in
+        </h1>
+        <form
+          className="space-y-10 w-full md:w-3/4"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <InputControl label={"Email"} altLabel={errors.email?.message}>
+            <input
+              {...register("email")}
+              className={`input bg-neutral-200 text-secondary-800 input-bordered ${
+                errors?.email ? "border-red-500/25" : null
+              }`}
+            />
+          </InputControl>
 
-        <InputControl label={"Password"} altLabel={errors.password?.message}>
-          <input
-            {...register("password")}
-            type="password"
-            className={`input input-bordered ${
-              errors?.password ? "border-red-500/25" : null
-            }`}
-          />
-        </InputControl>
+          <InputControl label={"Password"} altLabel={errors.password?.message}>
+            <input
+              {...register("password")}
+              type="password"
+              className={`input bg-neutral-200 text-secondary-800 input-bordered ${
+                errors?.password ? "border-red-500/25" : null
+              }`}
+            />
+          </InputControl>
 
-        <div className="flex flex-col">
-          <button type="submit" className="btn btn-primary">
-            {isLoading ? (
-              <span className="loading loading-spinner loading-sm"></span>
-            ) : (
-              <span>Continue</span>
-            )}
-          </button>
+          <div className="flex flex-col">
+            <button type="submit" className="btn btn-primary">
+              {isLoading ? (
+                <span className="loading loading-spinner loading-sm"></span>
+              ) : (
+                <span>Continue</span>
+              )}
+            </button>
+          </div>
+        </form>
+
+        <div className="py-3">
+          <p>
+            New Customer?{" "}
+            <Link
+              to={redirect ? `/register?redirect=${redirect}` : "/register"}
+              className="link text-accent"
+            >
+              Register here
+            </Link>
+          </p>
         </div>
-      </form>
-
-      <div className="py-3">
-        <p>
-          New Customer?{" "}
-          <Link
-            to={redirect ? `/register?redirect=${redirect}` : "/register"}
-            className="link link-secondary"
-          >
-            Register here
-          </Link>
-        </p>
-      </div>
-    </FormContainer>
+      </FormContainer>
+    </>
   );
 };
 

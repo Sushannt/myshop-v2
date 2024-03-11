@@ -30,10 +30,13 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-base-300 backdrop-blur-lg fixed top-0 left-0 w-full z-20">
+    <header className="bg-neutral-200 backdrop-blur-lg fixed top-0 left-0 w-full z-20">
       <div className="navbar md:w-11/12 mx-auto">
         <div className="flex-1">
-          <Link className="btn text-orange-300 text-xl font-semibold" to="/">
+          <Link
+            className="text-accent text-xl font-semibold border-2 py-2 px-3 rounded border-primary/50"
+            to="/"
+          >
             MyShop
           </Link>
         </div>
@@ -68,7 +71,7 @@ const Header = () => {
             </div>
             <div
               tabIndex={0}
-              className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
+              className="mt-3 z-[1] card card-compact dropdown-content w-52 text-neutral bg-neutral-100 shadow"
             >
               <div className="card-body card-compact">
                 <span className="font-bold text-lg">
@@ -80,7 +83,7 @@ const Header = () => {
                 </span>
                 <div className="card-actions">
                   <Link to={"/cart"}>
-                    <button className="btn btn-atomic_tangerine btn-block">
+                    <button className="btn bg-neutral-900 text-primary btn-block">
                       View cart
                     </button>
                   </Link>
@@ -104,7 +107,7 @@ const Header = () => {
             {userInfo ? (
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-neutral-100 rounded-box w-52"
               >
                 <li>
                   <a className="justify-between">
@@ -122,15 +125,13 @@ const Header = () => {
             ) : (
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52"
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-neutral-200 rounded-box w-52"
               >
-                <li>
-                  <Link to={"/login"}>
-                    <button className="btn btn-secondary btn-md btn-wide">
-                      SignIn
-                    </button>
-                  </Link>
-                </li>
+                <Link to={"/login"}>
+                  <li className="mx-auto text-secondary-800 text-center font-semibold">
+                    SignIn
+                  </li>
+                </Link>
               </ul>
             )}
           </div>

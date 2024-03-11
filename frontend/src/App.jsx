@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 const App = () => {
   return (
-    <div className="relative">
+    <div className="relative bg-neutral-100">
       <Header />
       <main className="min-h-[88vh] bg-onyx-600 mt-[8vh]">
         <Outlet />

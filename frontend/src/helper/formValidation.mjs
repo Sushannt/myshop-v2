@@ -5,7 +5,7 @@ export const loginSchema = yup.object({
     .string()
     .email("enter a valid email")
     .required("email is required"),
-  password: yup.string().min(4).required("password is required"),
+  password: yup.string().required("password is required"),
 });
 
 export const registerSchema = yup.object({
@@ -14,9 +14,20 @@ export const registerSchema = yup.object({
     .string()
     .email("enter a valid email")
     .required("email is required"),
-  password: yup.string().min(4).required("password is required"),
+  password: yup.string().min(6).required("password is required"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "passwords must match")
     .required("please confirm your password"),
+});
+
+export const shippingSchema = yup.object({
+  address: yup.string().required("address field is required!"),
+  city: yup.string().required("city field is required"),
+  postalCode: yup
+    .number("Postal code must be a number") // Custom error message for not a number
+    .positive("")
+    .min(4, "Postal code must be at least 4 digits") // Custom error message for minimum length
+    .required("Pin code is required"),
+  country: yup.string().required("country field is required"),
 });
