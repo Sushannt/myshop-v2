@@ -10,6 +10,8 @@ import { shippingSchema } from "../helper/formValidation.mjs";
 import FormContainer from "../components/FormContainer";
 import InputControl from "../components/InputControl";
 
+import CheckoutSteps from "../components/CheckoutSteps";
+
 const ShippingScreen = () => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
@@ -38,7 +40,8 @@ const ShippingScreen = () => {
 
   return (
     <FormContainer>
-      <h1 className="text-3xl font-semibold tracking-wide pt-10 text-secondary-800">
+      <CheckoutSteps step1 step2 />
+      <h1 className="text-3xl font-semibold tracking-wide text-secondary-800">
         Shipping
       </h1>
       <form
@@ -84,11 +87,7 @@ const ShippingScreen = () => {
         </InputControl>
         <div className="flex flex-col">
           <button type="submit" className="btn btn-primary">
-            {/* {isLoading ? ( */}
-            {/* <span className="loading loading-spinner loading-sm"></span> */}
-            {/* ) : ( */}
-            <span>Continue</span>
-            {/* )} */}
+            Continue
           </button>
         </div>
       </form>

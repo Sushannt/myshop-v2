@@ -69,17 +69,4 @@ export default {
     },
   },
   plugins: [daisyui],
-  // daisyui: {
-  //   themes: [
-  //     {
-  //       myTheme: {
-  //         primary: "#3a3042",
-  //         secondary: "#db9d47",
-  //         accent: "#ff784f",
-  //         neutral: "#ffe19c",
-  //         "base-100": "#edffd9",
-  //       },
-  //     },
-  //   ],
-  // },
 };
