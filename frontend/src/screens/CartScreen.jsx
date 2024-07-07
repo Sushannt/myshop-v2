@@ -1,9 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
+//hooks
+import useCart from "../hooks/useCart";
+
 // Components
-import Alert from "../components/Alert";
+import { InfoAlert } from "../components/Alert";
 
 // redux reducer
 import { addToCart, removeFromCart } from "../slices/cartSlice.mjs";
@@ -12,8 +15,7 @@ const CartScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const { cartItems, itemsPrice } = useCart();
 
   const addToCartHandler = async (product, qty) => {
     dispatch(addToCart({ ...product, qty }));
@@ -36,14 +38,17 @@ const CartScreen = () => {
         <div className="grid grid-cols-12 space-x-5 space-y-5 md:space-y-0 place-items-center w-full pt-[8vh]">
           <div className="col-span-12 md:col-span-8 overflow-y-auto w-full">
             {cartItems.length === 0 ? (
-              <Alert>
-                <span>
-                  Your cart is empty{" "}
-                  <Link to="/" className="link text-accent">
-                    Go Back
-                  </Link>
-                </span>
-              </Alert>
+              <InfoAlert
+                message={
+                  <>
+                    {" "}
+                    Your cart is empty{" "}
+                    <Link to="/" className="link text-accent">
+                      Go Back
+                    </Link>{" "}
+                  </>
+                }
+              />
             ) : (
               <>
                 <table className="hidden md:table">
@@ -171,7 +176,7 @@ const CartScreen = () => {
                   Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}
                   ) Items
                 </h2>
-                <p>${cart.itemsPrice}</p>
+                <p>${itemsPrice}</p>
                 <div className="card-actions justify-start mt-5">
                   <button
                     className="btn btn-accent text-neutral rounded"

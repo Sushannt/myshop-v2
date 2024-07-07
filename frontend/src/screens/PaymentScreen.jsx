@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { savePaymentMethod } from "../slices/cartSlice.mjs";
 import FormContainer from "../components/FormContainer";
 import InputControl from "../components/InputControl";
+
+import useCart from "../hooks/useCart";
 
 import CheckoutSteps from "../components/CheckoutSteps";
 
@@ -13,8 +15,7 @@ const PaymentScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const cart = useSelector((state) => state.cart);
-  const { shippingAddress } = cart;
+  const { shippingAddress } = useCart();
 
   useEffect(() => {
     if (!shippingAddress) {
@@ -38,16 +39,21 @@ const PaymentScreen = () => {
         <InputControl>
           <fieldset>
             <legend>Select Method</legend>
-            <label htmlFor="paymentMethod">Paypal or Credit Card</label>
-            <input
-              type="radio"
-              className="my-2"
-              id="paypal"
-              name="paymentMethod"
-              value={paymentMethod}
-              checked
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            />
+            <label
+              htmlFor="paymentMethod"
+              className="label cursor-pointer w-1/2"
+            >
+              <span className="label-text">Paypal or Credit Card</span>
+              <input
+                type="radio"
+                className="my-2 radio radio-primary"
+                id="paypal"
+                name="paymentMethod"
+                value={paymentMethod}
+                checked
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
+            </label>
           </fieldset>
           <button type="submit" className="btn btn-primary mt-5 w-2/4 ">
             Continue

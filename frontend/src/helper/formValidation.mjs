@@ -31,3 +31,25 @@ export const shippingSchema = yup.object({
     .required("Pin code is required"),
   country: yup.string().required("country field is required"),
 });
+
+export const profileSchema = yup.object({
+  name: yup
+    .string()
+    .matches(/^[^0-9]*$/, "Name cannot contain numbers")
+    .notRequired(),
+  email: yup.string().email("enter a valid email").notRequired(),
+  password: yup.string().notRequired(),
+  confirmPassword: yup.string().when("password", {
+    is: (password) => password && password.length > 0,
+    then: () =>
+      yup
+        .string()
+        .oneOf([yup.ref("password"), null], "Passwords must match")
+        .required("Confirm password is required"),
+    otherwise: () =>
+      yup
+        .string()
+        .oneOf([yup.ref("password"), null], "Passwords must match")
+        .notRequired(),
+  }),
+});

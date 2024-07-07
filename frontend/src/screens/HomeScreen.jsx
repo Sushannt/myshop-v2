@@ -3,7 +3,8 @@ import { useGetProductsQuery } from "../slices/productsApiSlice.mjs";
 
 // components
 import ProductCard from "../components/ProductCard.jsx";
-import Alert from "../components/Alert.jsx";
+import { ErrorAlert } from "../components/Alert.jsx";
+import Loader from "../components/Loader.jsx";
 
 const HomeScreen = () => {
   const { data: products, isLoading, isError, error } = useGetProductsQuery();
@@ -11,15 +12,9 @@ const HomeScreen = () => {
   return (
     <>
       {isLoading ? (
-        <div className="flex w-full min-h-screen items-center justify-center">
-          <span className="loading loading-spinner loading-lg"></span>
-        </div>
+        <Loader />
       ) : isError ? (
-        <Alert variant="error">
-          <span className="text-black">
-            {error?.error || error?.data?.message}{" "}
-          </span>
-        </Alert>
+        <ErrorAlert message={error?.message || error?.data?.message} />
       ) : (
         <section className="relative bg-neutral-100 text-secondary-800">
           <div className="fixed top-15 left-0 w-full z-10 backdrop-blur-lg">

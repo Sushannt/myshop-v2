@@ -1,7 +1,11 @@
 import FormContainer from "../components/FormContainer";
 import InputControl from "../components/InputControl";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
+//hook
+import useAuth from "../hooks/useAuth";
+
 import { useRegisterMutation } from "../slices/usersApiSlice.mjs";
 import { setCredentials } from "../slices/authSlice.mjs";
 
@@ -15,6 +19,9 @@ import { useEffect, useState } from "react";
 // validation schema
 import { registerSchema } from "../helper/formValidation.mjs";
 
+//component
+import { ErrorAlert } from "../components/Alert";
+
 const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,7 +30,7 @@ const LoginScreen = () => {
   const [registerUser, { isLoading }] = useRegisterMutation();
 
   //state
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo } = useAuth();
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
@@ -58,10 +65,8 @@ const LoginScreen = () => {
   return (
     <FormContainer>
       {errorMsg && (
-        <div className="toast">
-          <div className="alert alert-error">
-            <span>{errorMsg}</span>
-          </div>
+        <div className="toast toast-top toast-end">
+          <ErrorAlert message={errorMsg} />
         </div>
       )}
       <h1 className="text-3xl font-semibold tracking-wide pt-10 text-secondary-800">

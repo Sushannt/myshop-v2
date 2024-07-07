@@ -1,6 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "../slices/cartSlice.mjs";
+
+//hooks
+import useCart from "../hooks/useCart";
 
 // react hook form
 import { useForm } from "react-hook-form";
@@ -13,8 +16,7 @@ import InputControl from "../components/InputControl";
 import CheckoutSteps from "../components/CheckoutSteps";
 
 const ShippingScreen = () => {
-  const cart = useSelector((state) => state.cart);
-  const { shippingAddress } = cart;
+  const { shippingAddress } = useCart();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
   return (
     <nav className="pt-5">
-      <ul className="flex justify-between w-2/4 mx-auto font-semibold">
+      <ul className="flex justify-between w-full md:w-3/4 lg:w-2/4 mx-auto font-semibold">
         <li>
           {step1 ? (
             <NavLink to={"/login"} className="text-neutral-800">

@@ -1,7 +1,7 @@
 import FormContainer from "../components/FormContainer";
 import InputControl from "../components/InputControl";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../slices/usersApiSlice.mjs";
 import { setCredentials } from "../slices/authSlice.mjs";
 
@@ -13,9 +13,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 // hooks
 import { useEffect, useState } from "react";
+import useAuth from "../hooks/useAuth";
 
 //  validation schema
 import { loginSchema } from "../helper/formValidation.mjs";
+
+//component
+import { ErrorAlert } from "../components/Alert";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -25,7 +29,7 @@ const LoginScreen = () => {
   const [login, { isLoading }] = useLoginMutation();
 
   //state
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo } = useAuth();
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
@@ -59,9 +63,7 @@ const LoginScreen = () => {
     <>
       {errorMsg && (
         <div className="toast">
-          <div className="alert alert-error">
-            <span>{errorMsg}</span>
-          </div>
+          <ErrorAlert message={errorMsg} />
         </div>
       )}
       <FormContainer>

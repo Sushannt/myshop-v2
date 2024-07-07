@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 // components
 import Rating from "../components/Rating.jsx";
-import Alert from "../components/Alert.jsx";
+import { ErrorAlert } from "../components/Alert.jsx";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -32,41 +32,46 @@ const ProductScreen = () => {
   return (
     <>
       {isLoading ? (
-        <div className="flex w-full min-h-screen items-center justify-center">
+        <div className="flex min-h-screen w-full items-center justify-center">
           <span className="loading loading-spinner loading-lg"></span>
         </div>
       ) : isError ? (
-        <Alert variant="error">
-          <span> message={error?.error || error?.data?.message} </span>
-        </Alert>
+        <div className="mx-auto flex h-[60vh] w-2/4 flex-col justify-center gap-y-5 pt-[10vh]">
+          <ErrorAlert message={error?.message || error?.data?.message} />
+          <Link to="/">
+            <button className="btn btn-outline btn-primary w-2/4">
+              {`<< Go Back`}
+            </button>
+          </Link>
+        </div>
       ) : (
         <div className="bg-neutral-100 text-secondary-800">
           <Link to="/">
-            <button className="btn btn-outline text-accent hover:bg-accent mt-5 ml-5">
+            <button className="btn btn-outline ml-5 mt-5 text-accent hover:bg-accent">
               <ArrowLongLeftIcon className="size-6" /> Go back
             </button>
           </Link>
-          <section className="grid grid-cols-8 gap-5 w-11/12 mx-auto mt-5">
+          <section className="mx-auto mt-5 grid w-11/12 grid-cols-8 gap-5">
             <div className="col-span-8 sm:col-span-4">
               <img
                 src={product.image}
                 alt={product.description}
-                className="object-cover max-h-[40vh] md:max-h-full min-w-96 mx-auto"
+                className="mx-auto max-h-[40vh] min-w-96 object-cover md:max-h-full"
               />
             </div>
             <div className="col-span-4 sm:col-span-2">
-              <ul className="divide-y space-y-8">
+              <ul className="space-y-8 divide-y">
                 <li className="font-bold">{product.name}</li>
                 <li className="pt-8">
-                  <div className="flex justify-between w-full md:w-3/4">
+                  <div className="flex w-full justify-between md:w-3/4">
                     <Rating rating={product.rating} />
                     <span>{product.numReviews} reviews</span>
                   </div>
                 </li>
                 <li className="pt-8 text-2xl font-bold">
-                  Price: ${product.price}
+                  Price: ₹{product.price}
                 </li>
-                <li className="pt-8 text-md tracking-wide">
+                <li className="text-md pt-8 tracking-wide">
                   <span className="underline underline-offset-2">
                     Description:
                   </span>{" "}
@@ -74,7 +79,7 @@ const ProductScreen = () => {
                 </li>
               </ul>
             </div>
-            <div className="col-span-4 sm:col-span-2 overflow-x-auto">
+            <div className="col-span-4 overflow-x-auto sm:col-span-2">
               <table className="table">
                 <tbody>
                   <tr>
@@ -107,7 +112,7 @@ const ProductScreen = () => {
                                   {item + 1}
                                 </option>
                               );
-                            }
+                            },
                           )}
                         </select>
                       </td>
@@ -116,7 +121,7 @@ const ProductScreen = () => {
                   <tr>
                     <td colSpan="3" className="text-right sm:text-left">
                       <button
-                        className="btn btn-primary text-neutral-100 mt-5"
+                        className="btn btn-primary mt-5 text-neutral-100"
                         onClick={addToCartHandler}
                         disabled={product.countInStock < 1}
                       >

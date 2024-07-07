@@ -1,8 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 // no profile
 import noprofile from "../assets/noprofile.svg";
+
+//hook
+import useAuth from "../hooks/useAuth";
+import useCart from "../hooks/useCart";
 
 //apiSlice
 import { useLogoutMutation } from "../slices/usersApiSlice.mjs";
@@ -11,8 +15,8 @@ import { useLogoutMutation } from "../slices/usersApiSlice.mjs";
 import { logout } from "../slices/authSlice.mjs";
 
 const Header = () => {
-  const { cartItems, itemsPrice } = useSelector((state) => state.cart);
-  const { userInfo } = useSelector((state) => state.auth);
+  const { cartItems, itemsPrice } = useCart();
+  const { userInfo } = useAuth();
 
   const [logoutApiCall] = useLogoutMutation(); //api call
 
@@ -34,7 +38,7 @@ const Header = () => {
       <div className="navbar md:w-11/12 mx-auto">
         <div className="flex-1">
           <Link
-            className="text-accent text-xl font-semibold border-2 py-2 px-3 rounded border-primary/50"
+            className="text-accent bg-primary-300  text-xl font-bold border-2 py-2 px-3 rounded border-primary/50"
             to="/"
           >
             MyShop

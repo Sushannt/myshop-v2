@@ -7,6 +7,7 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.mjs";
 // routes
 import productRouter from "./routes/productRoutes.mjs";
 import userRouter from "./routes/userRoutes.mjs";
+import orderRouter from "./routes/orderRoutes.mjs";
 
 dbConn(); //connecting to MongoDB
 
@@ -24,6 +25,10 @@ app.get("/", (req, res) => {
 // routing middleware
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/paypal/config", (req, res) => {
+  res.json({ clientId: process.env.PAYPAL_CLIENT_ID });
+});
 
 //handling errors
 app.use(notFound);

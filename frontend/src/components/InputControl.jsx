@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 const InputControl = ({ children, label, altLabel }) => {
   return (
-    <label className="form-control w-full">
+    <label className="form-control min-w-full">
       <div className="label">
-        <span className="label-text text-secondary-700 tracking-wide">
+        <span className="label-text tracking-wide text-secondary-700">
           {label}
         </span>
         <span className="label-text-alt tracking-wide text-red-500">
