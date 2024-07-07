@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import Loader from "../components/Loader";
-import { useProfileMutation } from "../slices/usersApiSlice.mjs";
-import { setCredentials } from "../slices/authSlice.mjs";
-import FormContainer from "../components/FormContainer";
-import InputControl from "../components/InputControl";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { profileSchema } from "../helper/formValidation.mjs";
-import { ErrorAlert, SuccessAlert } from "../components/Alert";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+
 import { useGetMyOrdersQuery } from "../slices/ordersApiSlice.mjs";
+import { useProfileMutation } from "../slices/usersApiSlice.mjs";
+import { setCredentials } from "../slices/authSlice.mjs";
+
+import { profileSchema } from "../helper/formValidation.mjs";
+import FormContainer from "../components/FormContainer";
+import InputControl from "../components/InputControl";
+import { ErrorAlert, SuccessAlert } from "../components/Alert";
+import Loader from "../components/Loader";
 
 const ProfileScreen = () => {
   const [errorMsg, setErrorMsg] = useState(null);
@@ -19,6 +23,8 @@ const ProfileScreen = () => {
 
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
     useProfileMutation();
+
+  const { data: orders, isLoading, error } = useGetMyOrdersQuery();
 
   const {
     register,
@@ -120,7 +126,59 @@ const ProfileScreen = () => {
           </form>
         </FormContainer>
       </div>
-      <div className="md:col-span-8 lg:col-span-7">Column2</div>
+      <div className="px-5 md:col-span-8 lg:col-span-7">
+        <h2 className="pt-10 text-3xl font-semibold tracking-wide text-secondary-800">
+          My Orders
+        </h2>
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          <ErrorAlert>{error?.data?.message || error?.error}</ErrorAlert>
+        ) : (
+          <table className="table">
+            <thead>
+              <tr className="text-xl uppercase">
+                <th>id</th>
+                <th>date</th>
+                <th>total</th>
+                <th>paid</th>
+                <th>delivered</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id}</td>
+                  <td>{order.createdAt.substring(0, 10)}</td>
+                  <td>${order.totalPrice}</td>
+                  <td>
+                    {order.isPaid ? (
+                      order.paidAt.substring(0, 10)
+                    ) : (
+                      <XMarkIcon color="red" className="h-5 w-5" />
+                    )}
+                  </td>
+                  <td>
+                    {order.isDelivered ? (
+                      order.deliveredAt.substring(0, 10)
+                    ) : (
+                      <XMarkIcon color="red" className="h-5 w-5" />
+                    )}
+                  </td>
+                  <td>
+                    <Link to={`/orders/${order._id}`}>
+                      <button className="btn btn-ghost btn-link">
+                        Details
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };
